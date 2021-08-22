@@ -241,6 +241,7 @@ export type BuiltinsWithOptionalParams = DefaultPlugins & {
   removeRasterImages: void;
   removeScriptElement: void;
   removeStyleElement: void;
+  removeXlink: void;
   removeXMLNS: void;
   reusePaths: void;
 };

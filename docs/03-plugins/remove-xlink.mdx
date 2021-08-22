@@ -1,0 +1,35 @@
+---
+title: Remove XLink
+svgo:
+  pluginId: removeXlink
+---
+
+Removes XLink namespace prefixes and converts references to XLink attributes to the native SVG equivalent.
+
+Performs the following operations:
+
+* Converts `*:href` to [`href`](https://developer.mozilla.org/docs/Web/SVG/Attribute/href).
+* Converts `*:show` to [`target`](https://developer.mozilla.org/docs/Web/SVG/Attribute/target).
+* Converts `*:title` to [`<title>`](https://developer.mozilla.org/docs/Web/SVG/Element/title).
+* Drops all other references to the XLink namespace.
+* Removes XLink namespace declarations. 
+
+It's recommended to use this plugin if you intend to inline SVGs into an HTML document. HTML does not support explicit namespaces, so namespace prefixes are ignored by the browser anyway.
+
+:::danger
+
+This replaces XLink with features that are only supported in the SVGO 2 spec, and so breaks compatibility with the SVG 1.1.
+
+:::
+
+## Usage
+
+<PluginUsage/>
+
+## Demo
+
+<PluginDemo/>
+
+## Implementation
+
+* https://github.com/svg/svgo/blob/main/plugins/removeXlink.js
