@@ -106,7 +106,6 @@ Default preset includes the following list of plugins:
 - removeUnknownsAndDefaults
 - removeNonInheritableGroupAttrs
 - removeUselessStrokeAndFill
-- removeViewBox
 - cleanupEnableBackground
 - removeHiddenElems
 - removeEmptyText
@@ -179,8 +178,8 @@ const config = await loadConfig(configFile, cwd);
 
 ## Built-in plugins
 
-| Plugin                                                                                                              | Description                                                                                                                                              | Default    |
-| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| Plugin                                                                                                            | Description                                                                                                                                              | Default    |
+|-------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [cleanupAttrs](https://github.com/svg/svgo/blob/main/plugins/cleanupAttrs.js)                                     | cleanup attributes from newlines, trailing, and repeating spaces                                                                                         | `enabled`  |
 | [mergeStyles](https://github.com/svg/svgo/blob/main/plugins/mergeStyles.js)                                       | merge multiple style elements into one                                                                                                                   | `enabled`  |
 | [inlineStyles](https://github.com/svg/svgo/blob/main/plugins/inlineStyles.js)                                     | move and merge styles from `<style>` elements to element `style` attributes                                                                              | `enabled`  |
@@ -197,7 +196,7 @@ const config = await loadConfig(configFile, cwd);
 | [removeHiddenElems](https://github.com/svg/svgo/blob/main/plugins/removeHiddenElems.js)                           | remove hidden elements                                                                                                                                   | `enabled`  |
 | [removeEmptyText](https://github.com/svg/svgo/blob/main/plugins/removeEmptyText.js)                               | remove empty Text elements                                                                                                                               | `enabled`  |
 | [removeEmptyContainers](https://github.com/svg/svgo/blob/main/plugins/removeEmptyContainers.js)                   | remove empty Container elements                                                                                                                          | `enabled`  |
-| [removeViewBox](https://github.com/svg/svgo/blob/main/plugins/removeViewBox.js)                                   | remove `viewBox` attribute when possible                                                                                                                 | `enabled`  |
+| [removeViewBox](https://github.com/svg/svgo/blob/main/plugins/removeViewBox.js)                                   | remove `viewBox` attribute when possible                                                                                                                 | `disabled` |
 | [cleanupEnableBackground](https://github.com/svg/svgo/blob/main/plugins/cleanupEnableBackground.js)               | remove or cleanup `enable-background` attribute when possible                                                                                            | `enabled`  |
 | [minifyStyles](https://github.com/svg/svgo/blob/main/plugins/minifyStyles.js)                                     | minify `<style>` elements content with [CSSO](https://github.com/css/csso)                                                                               | `enabled`  |
 | [convertStyleToAttrs](https://github.com/svg/svgo/blob/main/plugins/convertStyleToAttrs.js)                       | convert styles into attributes                                                                                                                           | `disabled` |
@@ -221,7 +220,7 @@ const config = await loadConfig(configFile, cwd);
 | [convertEllipseToCircle](https://github.com/svg/svgo/blob/main/plugins/convertEllipseToCircle.js)                 | convert non-eccentric `<ellipse>` to `<circle>`                                                                                                          | `enabled`  |
 | [sortAttrs](https://github.com/svg/svgo/blob/main/plugins/sortAttrs.js)                                           | sort element attributes for epic readability                                                                                                             | `disabled` |
 | [sortDefsChildren](https://github.com/svg/svgo/blob/main/plugins/sortDefsChildren.js)                             | sort children of `<defs>` in order to improve compression                                                                                                | `enabled`  |
-| [removeDimensions](https://github.com/svg/svgo/blob/main/plugins/removeDimensions.js)                             | remove `width`/`height` and add `viewBox` if it's missing (opposite to removeViewBox, disable it first)                                                  | `disabled` |
+| [removeDimensions](https://github.com/svg/svgo/blob/main/plugins/removeDimensions.js)                             | remove `width`/`height` and add `viewBox` if it's missing (opposite to removeViewBox)                                                                    | `disabled` |
 | [removeAttrs](https://github.com/svg/svgo/blob/main/plugins/removeAttrs.js)                                       | remove attributes by pattern                                                                                                                             | `disabled` |
 | [removeAttributesBySelector](https://github.com/svg/svgo/blob/main/plugins/removeAttributesBySelector.js)         | removes attributes of elements that match a CSS selector                                                                                                 | `disabled` |
 | [removeElementsByAttr](https://github.com/svg/svgo/blob/main/plugins/removeElementsByAttr.js)                     | remove arbitrary elements by `ID` or `className`                                                                                                         | `disabled` |
