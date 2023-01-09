@@ -101,55 +101,57 @@ exports.fn = (_root, params, info) => {
           }
 
           // parse styles
-          let cssText = '';
-          if (
-            node.children[0].type === 'text' ||
-            node.children[0].type === 'cdata'
-          ) {
-            cssText = node.children[0].value;
-          }
-          /**
-           * @type {null | csstree.CssNode}
-           */
-          let cssAst = null;
-          try {
-            cssAst = csstree.parse(cssText, {
-              parseValue: true,
-              parseCustomProperty: false,
-            });
-          } catch {
-            return;
-          }
-
-          csstree.walk(cssAst, (node) => {
-            // #ID, .class selectors
+          node.children.forEach(child => {
+            let cssText = '';
             if (
-              (prefixIds && node.type === 'IdSelector') ||
-              (prefixClassNames && node.type === 'ClassSelector')
+              child.type === 'text' ||
+              child.type === 'cdata'
             ) {
-              node.name = prefixId(prefix, node.name);
+              cssText = child.value;
+            }
+            /**
+             * @type {null | csstree.CssNode}
+             */
+            let cssAst = null;
+            try {
+              cssAst = csstree.parse(cssText, {
+                parseValue: true,
+                parseCustomProperty: false,
+              });
+            } catch {
               return;
             }
-            // url(...) references
-            // csstree v2 changed this type
-            if (node.type === 'Url' && toAny(node.value).length > 0) {
-              const prefixed = prefixReference(
-                prefix,
-                unquote(toAny(node.value))
-              );
-              if (prefixed != null) {
-                toAny(node).value = prefixed;
+
+            csstree.walk(cssAst, (node) => {
+              // #ID, .class selectors
+              if (
+                (prefixIds && node.type === 'IdSelector') ||
+                (prefixClassNames && node.type === 'ClassSelector')
+              ) {
+                node.name = prefixId(prefix, node.name);
+                return;
               }
+              // url(...) references
+              // csstree v2 changed this type
+              if (node.type === 'Url' && toAny(node.value).length > 0) {
+                const prefixed = prefixReference(
+                  prefix,
+                  unquote(toAny(node.value))
+                );
+                if (prefixed != null) {
+                  toAny(node).value = prefixed;
+                }
+              }
+            });
+
+            // update styles
+            if (
+              child.type === 'text' ||
+              child.type === 'cdata'
+            ) {
+              child.value = csstree.generate(cssAst);
             }
           });
-
-          // update styles
-          if (
-            node.children[0].type === 'text' ||
-            node.children[0].type === 'cdata'
-          ) {
-            node.children[0].value = csstree.generate(cssAst);
-          }
           return;
         }
 
