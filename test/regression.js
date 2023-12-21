@@ -20,34 +20,15 @@ const chunkInto = (array, chunksCount) => {
 };
 
 const runTests = async ({ list }) => {
-  let skipped = 0;
   let mismatched = 0;
   let passed = 0;
   console.info('Start browser...');
+  /**
+   * @param {Object} page
+   * @param {string} name
+   * @returns {Promise}
+   */
   const processFile = async (page, name) => {
-    if (
-      // animated
-      name.startsWith('w3c-svg-11-test-suite/svg/animate-') ||
-      name === 'w3c-svg-11-test-suite/svg/filters-light-04-f.svg' ||
-      name === 'w3c-svg-11-test-suite/svg/filters-composite-05-f.svg' ||
-      // messed gradients
-      name === 'w3c-svg-11-test-suite/svg/pservers-grad-18-b.svg' ||
-      // removing wrapping <g> breaks :first-child pseudo-class
-      name === 'w3c-svg-11-test-suite/svg/styling-pres-04-f.svg' ||
-      // rect is converted to path which matches wrong styles
-      name === 'w3c-svg-11-test-suite/svg/styling-css-08-f.svg' ||
-      // complex selectors are messed because of converting shapes to paths
-      name === 'w3c-svg-11-test-suite/svg/struct-use-10-f.svg' ||
-      name === 'w3c-svg-11-test-suite/svg/struct-use-11-f.svg' ||
-      name === 'w3c-svg-11-test-suite/svg/styling-css-01-b.svg' ||
-      name === 'w3c-svg-11-test-suite/svg/styling-css-04-f.svg' ||
-      // strange artifact breaks inconsistently  breaks regression tests
-      name === 'w3c-svg-11-test-suite/svg/filters-conv-05-f.svg'
-    ) {
-      console.info(`${name} is skipped`);
-      skipped += 1;
-      return;
-    }
     const width = 960;
     const height = 720;
     await page.goto(`http://localhost:5000/original/${name}`);
@@ -102,7 +83,6 @@ const runTests = async ({ list }) => {
     }),
   );
   await browser.close();
-  console.info(`Skipped: ${skipped}`);
   console.info(`Mismatched: ${mismatched}`);
   console.info(`Passed: ${passed}`);
   return mismatched === 0;
