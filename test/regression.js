@@ -18,8 +18,6 @@ const runTests = async ({ list }) => {
    * @returns {Promise}
    */
   const processFile = async (page, name) => {
-    const width = 960;
-    const height = 720;
     await page.goto(`http://localhost:5000/original/${name}`);
     await page.setViewportSize({ width, height });
     const originalBuffer = await page.screenshot({
@@ -62,7 +60,7 @@ const runTests = async ({ list }) => {
   const worker = async () => {
     let item;
     const page = await context.newPage();
-    while ((item = list.shift())) {
+    while ((item = list.pop())) {
       await processFile(page, item);
     }
     await page.close();
@@ -70,16 +68,7 @@ const runTests = async ({ list }) => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({ javaScriptEnabled: false });
-  await Promise.all([
-    worker(),
-    worker(),
-    worker(),
-    worker(),
-    worker(),
-    worker(),
-    worker(),
-    worker(),
-  ]);
+  await Promise.all(Array.from(new Array(8), () => worker()));
   await browser.close();
   console.info(`Mismatched: ${mismatched}`);
   console.info(`Passed: ${passed}`);
