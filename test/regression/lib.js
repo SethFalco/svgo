@@ -2,6 +2,7 @@
  * @fileoverview Utilities to manage manage regression tests.
  */
 
+import { exec } from 'node:child_process';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import fs from 'node:fs/promises';
@@ -133,4 +134,20 @@ export function toBulletPointList(arr, bullet = '*') {
  */
 export function pathToPosix(filepath) {
   return filepath.replaceAll(path.sep, path.posix.sep);
+}
+
+/**
+ * @returns {Promise<string>}
+ */
+export async function getCommitRef() {
+  return new Promise((res, rej) => {
+    exec('git rev-parse HEAD', (err, stdout) => {
+      if (err) {
+        rej(err);
+        return;
+      }
+
+      res(stdout.trim());
+    });
+  });
 }
