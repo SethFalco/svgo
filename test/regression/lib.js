@@ -54,7 +54,7 @@ export async function printReport(report) {
 
 ▶ Metrics
         Bytes Saved: ${bytesToHumanReadable(report.metrics.bytesSaved)}
-         Time Taken: ${secsToHumanReadable(/** @type {number} */ (report.metrics.timeTakenSecs))}
+         Time Taken: ${secsToHumanReadable(report.metrics.timeTakenSecs)}
   Peak Memory Alloc: ${bytesToHumanReadable(report.metrics.peakMemoryAlloc, 'KiB')}${
     shouldHaveMatched.length !== 0
       ? picocolors.red(

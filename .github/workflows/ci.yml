@@ -39,7 +39,7 @@ jobs:
       - run: yarn install
       - run: yarn spellcheck
   test:
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }}
+    name: test - ${{ matrix.os }} - Node.js v${{ matrix.node-version }}
     strategy:
       fail-fast: false
       matrix:
