@@ -83,8 +83,8 @@ export async function writeReport(data) {
 /**
  * @returns {Promise<Partial<TestReport>>}
  */
-export async function readReport() {
-  const text = await fs.readFile(OPTIMIZATION_REPORT_PATH, 'utf-8');
+export async function readReport(path = OPTIMIZATION_REPORT_PATH) {
+  const text = await fs.readFile(path, 'utf-8');
   return JSON.parse(text);
 }
 
