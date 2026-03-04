@@ -21,8 +21,9 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: yarn install
       - run: |
+          echo $(jq -r .version <package.json)
           if jq -r .version <package.json | grep -q \\-rc.; then
-            yarn npm publish --access public --tag rc
+            echo 'yarn npm publish --access public --tag rc'
           else
-            yarn npm publish --access public
+            echo 'yarn npm publish --access public'
           fi
